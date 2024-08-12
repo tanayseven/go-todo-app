@@ -1,0 +1,10 @@
+{
+  "database": {
+    "default": {
+      "driver": "sqlite",
+      "file": "main.db"
+    }
+  },
+  "app_id": "tech.tanay.go-todo-app",
+  "language": "en"
+}

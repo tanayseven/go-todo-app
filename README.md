@@ -18,9 +18,9 @@ TODO
 ----
 - [X] Setup Admin
 - [X] Setup Templating
-- [ ] Setup Logging
-- [ ] Add GORM support to store and retrieve the data
-- [ ] Setup user auth
+- [X] Setup Logging
+- [X] Add GORM support to store and retrieve the data
 - [ ] Implement CRUD for TODO List
 - [ ] Write simple tests
+- [ ] Setup user auth
 - [ ] Add HTMX for better UX

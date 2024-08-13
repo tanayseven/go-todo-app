@@ -9,6 +9,8 @@ import (
 	"github.com/GoAdminGroup/go-admin/tests/tables"
 	_ "github.com/GoAdminGroup/themes/adminlte" // Import the theme
 	"github.com/labstack/echo/v4/middleware"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 	"html/template"
 	"io"
 	"net/http"
@@ -24,11 +26,53 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-type Message struct {
-	Message string `json:"Message"`
+type Product struct {
+	gorm.Model
+	Code  string
+	Price uint
+}
+
+type ProductData struct {
+	Code  string
+	Price uint
+}
+
+func (p Product) ToProductData() ProductData {
+	return ProductData{
+		Code:  p.Code,
+		Price: p.Price,
+	}
+}
+
+func ToProductDataList(products []Product) []ProductData {
+	var productsData []ProductData
+	for _, product := range products {
+		productsData = append(productsData, product.ToProductData())
+	}
+	return productsData
+}
+
+type Data struct {
+	Message  string        `json:"message"`
+	Products []ProductData `json:"products"`
 }
 
 func main() {
+	db, err := gorm.Open(sqlite.Open("main.db"), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	err = db.AutoMigrate(&Product{})
+	if err != nil {
+		return
+	}
+	db.Create(&Product{Code: "D42", Price: 100})
+	var product Product
+	db.First(&product, 1)
+	db.First(&product, "code = ?", "D42")
+	db.Model(&product).Update("Price", 200)
+	db.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // non-zero fields
+	db.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
 	cfg := config.Config{
 		Databases: config.DatabaseList{
 			"default": {
@@ -36,8 +80,7 @@ func main() {
 				Driver: config.DriverSqlite,
 			},
 		},
-		UrlPrefix: "admin", // The url prefix of the website.
-		// Store must be set and guaranteed to have write access, otherwise new administrator users cannot be added.
+		UrlPrefix: "admin",
 		Store: config.Store{
 			Path:   "./uploads",
 			Prefix: "uploads",
@@ -56,8 +99,17 @@ func main() {
 	e.Debug = true
 	e.Use(middleware.Logger())
 	_ = eng.Use(e)
+	var products []Product
+	db.Find(&products)
+
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "base.gohtml", Message{Message: "Hello, World!"})
+		return c.Render(
+			http.StatusOK,
+			"base.gohtml",
+			Data{
+				Message:  "Hello, World!",
+				Products: ToProductDataList(products),
+			})
 	})
 
 	e.Logger.Fatal(e.Start(":8000"))

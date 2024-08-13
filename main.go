@@ -26,6 +26,45 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+const (
+	TODO = 0
+	EDIT = 1
+	DONE = 2
+)
+
+type ListItemTable struct {
+	gorm.Model
+	ID    int
+	Text  string
+	State int
+}
+
+func (ListItemTable) TableName() string {
+	return "list_item"
+}
+
+type ListItemViewModel struct {
+	ID    int
+	Text  string
+	State int
+}
+
+func (l ListItemTable) ToListItemViewModel() ListItemViewModel {
+	return ListItemViewModel{
+		ID:    l.ID,
+		Text:  l.Text,
+		State: l.State,
+	}
+}
+
+func ToListItemViewModelList(listItems []ListItemTable) []ListItemViewModel {
+	var listItemsViewModel []ListItemViewModel
+	for _, listItem := range listItems {
+		listItemsViewModel = append(listItemsViewModel, listItem.ToListItemViewModel())
+	}
+	return listItemsViewModel
+}
+
 type Product struct {
 	gorm.Model
 	Code  string
@@ -53,8 +92,8 @@ func ToProductDataList(products []Product) []ProductData {
 }
 
 type Data struct {
-	Message  string        `json:"message"`
-	Products []ProductData `json:"products"`
+	Message   string              `json:"message"`
+	ListItems []ListItemViewModel `json:"products"`
 }
 
 func main() {
@@ -71,7 +110,7 @@ func main() {
 	db.First(&product, 1)
 	db.First(&product, "code = ?", "D42")
 	db.Model(&product).Update("Price", 200)
-	db.Model(&product).Updates(Product{Price: 200, Code: "F42"}) // non-zero fields
+	db.Model(&product).Updates(Product{Price: 200, Code: "F42"})
 	db.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
 	cfg := config.Config{
 		Databases: config.DatabaseList{
@@ -99,18 +138,33 @@ func main() {
 	e.Debug = true
 	e.Use(middleware.Logger())
 	_ = eng.Use(e)
-	var products []Product
-	db.Find(&products)
+	var listItems []ListItemTable
+	db.Find(&listItems)
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(
 			http.StatusOK,
 			"base.gohtml",
 			Data{
-				Message:  "Hello, World!",
-				Products: ToProductDataList(products),
+				Message:   "Hello, World!",
+				ListItems: ToListItemViewModelList(listItems),
 			})
 	})
 
+	//e.DELETE("/products/:id", func(c echo.Context) error {
+	//	// TODO: delete an entry
+	//}
+	//
+	//e.POST("/products", func(c echo.Context) error {
+	//	// TODO: create a new entry
+	//}
+	//
+	//e.PATCH("/products/:id/edit", func(c echo.Context) error {
+	//	// TODO: edit the text of an entry
+	//}
+	//
+	//e.PATCH("/products/:id/done", func(c echo.Context) error {
+	//	// TODO: mark the text of an entry as done or not done
+	//}
 	e.Logger.Fatal(e.Start(":8000"))
 }

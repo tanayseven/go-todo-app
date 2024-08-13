@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	_ "github.com/GoAdminGroup/go-admin/adapter/echo" // Import the adapter, it must be imported. If it is not imported, you need to define it yourself.
 	"github.com/GoAdminGroup/go-admin/engine"
 	"github.com/GoAdminGroup/go-admin/modules/config"
@@ -9,9 +8,9 @@ import (
 	"github.com/GoAdminGroup/go-admin/modules/language"
 	"github.com/GoAdminGroup/go-admin/tests/tables"
 	_ "github.com/GoAdminGroup/themes/adminlte" // Import the theme
+	"github.com/labstack/echo/v4/middleware"
 	"html/template"
 	"io"
-
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -26,7 +25,7 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 }
 
 type Message struct {
-	Message string `json:"message"`
+	Message string `json:"Message"`
 }
 
 func main() {
@@ -50,22 +49,16 @@ func main() {
 	eng := engine.Default()
 	eng.AddConfig(&cfg).
 		AddGenerators(tables.Generators)
-
 	renderer := &TemplateRenderer{
 		templates: template.Must(template.ParseGlob("templates/*.gohtml")),
 	}
-
-	// Set the renderer
 	e.Renderer = renderer
-
+	e.Debug = true
+	e.Use(middleware.Logger())
 	_ = eng.Use(e)
-
-	newMap := make(map[string]interface{})
-	data, _ := json.Marshal(Message{Message: "Hello, World!"})
-	_ = json.Unmarshal(data, &newMap)
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "base.gohtml", newMap)
+		return c.Render(http.StatusOK, "base.gohtml", Message{Message: "Hello, World!"})
 	})
 
-	e.Logger.Fatal(e.Start(":8081"))
+	e.Logger.Fatal(e.Start(":8000"))
 }

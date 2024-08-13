@@ -12,3 +12,15 @@ Setup
 3. Run the project `go run .`
 4. Open the browser and go to `http://localhost:8080`
 5. Generate a build for production `go build .`
+
+
+TODO
+----
+- [X] Setup Admin
+- [X] Setup Templating
+- [ ] Setup Logging
+- [ ] Add GORM support to store and retrieve the data
+- [ ] Setup user auth
+- [ ] Implement CRUD for TODO List
+- [ ] Write simple tests
+- [ ] Add HTMX for better UX

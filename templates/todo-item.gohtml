@@ -1,0 +1,12 @@
+<li  id="todo-item-{{.ID}}">{{ .Text }}
+    {{ if eq .State "TODO" }}
+        <button
+            hx-trigger="click"
+            hx-delete="/todo/{{ .ID }}"
+            hx-target="#todo-item-{{.ID}}"
+            hx-swap="outerHTML"
+        >
+            <img class="todo-item-icon" src="/static/icons/delete.svg" alt="Delete todo item icon">
+        </button>
+    {{ end }}
+</li>

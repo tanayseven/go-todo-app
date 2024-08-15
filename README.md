@@ -20,7 +20,12 @@ TODO
 - [X] Setup Templating
 - [X] Setup Logging
 - [X] Add GORM support to store and retrieve the data
-- [ ] Implement CRUD for TODO List
+- [X] Implement Add
+- [X] Implement Delete
+- [ ] Implement Update
+- [ ] Implement Mark Done
+- [ ] Implement Mark Undone
+- [ ] Write the frontend for the TODO List
 - [ ] Write simple tests
 - [ ] Setup user auth
 - [ ] Add HTMX for better UX

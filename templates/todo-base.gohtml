@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Todo List</title>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <h1>Welcome {{.Name}}</h1>
+            <h2>Tasks</h2>
+            <form
+                hx-trigger="click from:button[id='add-new']"
+                hx-post="/todo/add"
+                hx-target="#todo-list"
+{{/*                hx-indicator=".loading"*/}}
+                hx-swap="beforeend"
+                hx-on::after-request="this.reset()"
+            >
+            <label>
+                <input type="text" name="text" class="todo-item-new-text">
+            </label>
+            <button id="add-new" class="todo-item-button">
+                <img class="todo-item-icon" src="/static/icons/plus.svg" alt="Add new todo item icon">
+            </button>
+            </form>
+            <ul id="todo-list">
+                {{range .ListItems}}
+                    {{template "todo-item.gohtml" .}}
+                {{end}}
+            </ul>
+        </div>
+    </div>
+    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/response-targets.js"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+</body>
+</html>

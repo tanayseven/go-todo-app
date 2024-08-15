@@ -46,18 +46,29 @@ func (ListItemTable) TableName() string {
 type ListItemViewModel struct {
 	ID    int
 	Text  string
-	State int
+	State string
 }
 
 func (l ListItemTable) ToListItemViewModel() ListItemViewModel {
+	stringState := ""
+	switch l.State {
+	case TODO:
+		stringState = "TODO"
+		break
+	case EDIT:
+		stringState = "EDIT"
+		break
+	case DONE:
+		stringState = "DONE"
+	}
 	return ListItemViewModel{
 		ID:    l.ID,
 		Text:  l.Text,
-		State: l.State,
+		State: stringState,
 	}
 }
 
-func ToListItemViewModelList(listItems []ListItemTable) []ListItemViewModel {
+func ToListItemViewModel(listItems []ListItemTable) []ListItemViewModel {
 	var listItemsViewModel []ListItemViewModel
 	for _, listItem := range listItems {
 		listItemsViewModel = append(listItemsViewModel, listItem.ToListItemViewModel())
@@ -65,35 +76,15 @@ func ToListItemViewModelList(listItems []ListItemTable) []ListItemViewModel {
 	return listItemsViewModel
 }
 
-type Product struct {
-	gorm.Model
-	Code  string
-	Price uint
-}
-
-type ProductData struct {
-	Code  string
-	Price uint
-}
-
-func (p Product) ToProductData() ProductData {
-	return ProductData{
-		Code:  p.Code,
-		Price: p.Price,
-	}
-}
-
-func ToProductDataList(products []Product) []ProductData {
-	var productsData []ProductData
-	for _, product := range products {
-		productsData = append(productsData, product.ToProductData())
-	}
-	return productsData
-}
-
-type Data struct {
-	Message   string              `json:"message"`
+type TodoBaseViewModel struct {
+	Name      string              `json:"message"`
 	ListItems []ListItemViewModel `json:"products"`
+}
+
+type TodoItemViewModel struct {
+	ID    int
+	Text  string
+	State string
 }
 
 func main() {
@@ -101,17 +92,7 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	err = db.AutoMigrate(&Product{})
-	if err != nil {
-		return
-	}
-	db.Create(&Product{Code: "D42", Price: 100})
-	var product Product
-	db.First(&product, 1)
-	db.First(&product, "code = ?", "D42")
-	db.Model(&product).Update("Price", 200)
-	db.Model(&product).Updates(Product{Price: 200, Code: "F42"})
-	db.Model(&product).Updates(map[string]interface{}{"Price": 200, "Code": "F42"})
+
 	cfg := config.Config{
 		Databases: config.DatabaseList{
 			"default": {
@@ -134,37 +115,66 @@ func main() {
 	renderer := &TemplateRenderer{
 		templates: template.Must(template.ParseGlob("templates/*.gohtml")),
 	}
+	username := "john.doe"
 	e.Renderer = renderer
 	e.Debug = true
+	e.Static("/static", "static")
 	e.Use(middleware.Logger())
 	_ = eng.Use(e)
+
+	err = db.AutoMigrate(ListItemTable{})
+	if err != nil {
+		return
+	}
+
 	var listItems []ListItemTable
-	db.Find(&listItems)
 
 	e.GET("/", func(c echo.Context) error {
+		var listItems []ListItemTable
+		db.Find(&listItems)
 		return c.Render(
 			http.StatusOK,
-			"base.gohtml",
-			Data{
-				Message:   "Hello, World!",
-				ListItems: ToListItemViewModelList(listItems),
+			"todo-base.gohtml",
+			TodoBaseViewModel{
+				Name:      username,
+				ListItems: ToListItemViewModel(listItems),
 			})
 	})
 
-	//e.DELETE("/products/:id", func(c echo.Context) error {
-	//	// TODO: delete an entry
-	//}
-	//
-	//e.POST("/products", func(c echo.Context) error {
-	//	// TODO: create a new entry
-	//}
-	//
-	//e.PATCH("/products/:id/edit", func(c echo.Context) error {
-	//	// TODO: edit the text of an entry
-	//}
-	//
-	//e.PATCH("/products/:id/done", func(c echo.Context) error {
-	//	// TODO: mark the text of an entry as done or not done
-	//}
+	e.POST("/todo/add", func(c echo.Context) error {
+		result := &ListItemTable{
+			Text:  c.FormValue("text"),
+			State: TODO,
+		}
+		db.Create(&result)
+		return c.Render(http.StatusOK, "todo-item.gohtml", result.ToListItemViewModel())
+	})
+
+	e.DELETE("/todo/:id", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Delete(&listItem)
+		return c.NoContent(http.StatusOK)
+	})
+
+	e.PATCH("/todo/:id/edit", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Model(&listItem).Update("State", EDIT)
+		return c.Render(http.StatusOK, "base.gohtml", TodoBaseViewModel{
+			Name:      username,
+			ListItems: ToListItemViewModel(listItems),
+		})
+	})
+
+	e.PATCH("/todo/:id/done", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Model(&listItem).Update("State", DONE)
+		return c.Render(http.StatusOK, "base.gohtml", TodoBaseViewModel{
+			Name:      "Hello, World!",
+			ListItems: ToListItemViewModel(listItems),
+		})
+	})
 	e.Logger.Fatal(e.Start(":8000"))
 }

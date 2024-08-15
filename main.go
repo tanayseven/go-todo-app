@@ -161,10 +161,22 @@ func main() {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", EDIT)
-		return c.Render(http.StatusOK, "base.gohtml", TodoBaseViewModel{
-			Name:      username,
-			ListItems: ToListItemViewModel(listItems),
-		})
+		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+	})
+
+	e.PATCH("/todo/:id/edit/save", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Model(&listItem).Update("Text", c.FormValue("text"))
+		db.Model(&listItem).Update("State", TODO)
+		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+	})
+
+	e.PATCH("/todo/:id/edit/cancel", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Model(&listItem).Update("State", TODO)
+		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
 	})
 
 	e.PATCH("/todo/:id/done", func(c echo.Context) error {

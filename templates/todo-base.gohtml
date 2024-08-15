@@ -12,7 +12,6 @@
                 hx-trigger="click from:button[id='add-new']"
                 hx-post="/todo/add"
                 hx-target="#todo-list"
-{{/*                hx-indicator=".loading"*/}}
                 hx-swap="beforeend"
                 hx-on::after-request="this.reset()"
             >
@@ -20,7 +19,7 @@
                 <input type="text" name="text" class="todo-item-new-text">
             </label>
             <button id="add-new" class="todo-item-button">
-                <img class="todo-item-icon" src="/static/icons/plus.svg" alt="Add new todo item icon">
+                <img class="todo-item-icon" width="25" src="/static/icons/plus.svg" alt="Add new todo item icon">
             </button>
             </form>
             <ul id="todo-list">

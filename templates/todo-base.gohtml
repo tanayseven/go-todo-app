@@ -13,7 +13,7 @@
                 hx-post="/todo/add"
                 hx-target="#todo-list"
                 hx-swap="beforeend"
-                hx-on::after-request="this.reset()"
+                hx-on:htmx:after-request="this.reset()"
             >
             <label>
                 <input type="text" name="text" class="todo-item-new-text">

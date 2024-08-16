@@ -22,7 +22,7 @@ TODO
 - [X] Add GORM support to store and retrieve the data
 - [X] Implement Add
 - [X] Implement Delete
-- [ ] Implement Update
+- [X] Implement Update
 - [ ] Implement Mark Done
 - [ ] Implement Mark Undone
 - [ ] Write the frontend for the TODO List

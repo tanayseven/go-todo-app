@@ -23,8 +23,8 @@ TODO
 - [X] Implement Add
 - [X] Implement Delete
 - [X] Implement Update
-- [ ] Implement Mark Done
-- [ ] Implement Mark Undone
+- [X] Implement Mark Done
+- [X] Implement Mark Undone
 - [ ] Write the frontend for the TODO List
 - [ ] Write simple tests
 - [ ] Setup user auth

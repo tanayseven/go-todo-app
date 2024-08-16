@@ -127,8 +127,6 @@ func main() {
 		return
 	}
 
-	var listItems []ListItemTable
-
 	e.GET("/", func(c echo.Context) error {
 		var listItems []ListItemTable
 		db.Find(&listItems)
@@ -183,10 +181,14 @@ func main() {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", DONE)
-		return c.Render(http.StatusOK, "base.gohtml", TodoBaseViewModel{
-			Name:      "Hello, World!",
-			ListItems: ToListItemViewModel(listItems),
-		})
+		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+	})
+
+	e.PATCH("/todo/:id/undo", func(c echo.Context) error {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Model(&listItem).Update("State", TODO)
+		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
 	})
 	e.Logger.Fatal(e.Start(":8000"))
 }

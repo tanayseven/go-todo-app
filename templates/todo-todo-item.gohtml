@@ -1,0 +1,27 @@
+<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']">
+    <input id="todo-item-input-{{.ID}}" name="text" type="text" value="{{ .Text }}" disabled />
+    <button
+            hx-trigger="click"
+            hx-patch="/todo/{{.ID}}/edit"
+            hx-target="#todo-item-{{.ID}}"
+            hx-swap="outerHTML"
+    >
+        <img class="todo-item-icon" width="25" src="/static/icons/edit.svg" alt="Edit todo item icon">
+    </button>
+    <button
+            hx-trigger="click"
+            hx-patch="/todo/{{.ID}}/done"
+            hx-target="#todo-item-{{.ID}}"
+            hx-swap="outerHTML"
+    >
+        <img class="todo-item-icon" width="25" src="/static/icons/done.svg" alt="Done todo item icon">
+    </button>
+    <button
+            hx-trigger="click"
+            hx-delete="/todo/{{.ID}}"
+            hx-target="#todo-item-{{.ID}}"
+            hx-swap="outerHTML"
+    >
+        <img class="todo-item-icon" width="25" src="/static/icons/delete.svg" alt="Delete todo item icon">
+    </button>
+</li>

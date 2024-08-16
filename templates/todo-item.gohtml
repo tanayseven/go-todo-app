@@ -1,67 +1,7 @@
-<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']">
-    {{ if eq .State "TODO" }}<input id="todo-item-input-{{.ID}}" name="text" type="text" value="{{ .Text }}" disabled />{{ end }}
-    {{ if eq .State "EDIT" }}<input id="todo-item-input-{{.ID}}" name="text" type="text" value="{{ .Text }}" />{{ end }}
-    {{ if eq .State "DONE" }}<input id="todo-item-input-{{.ID}}" style="text-decoration: line-through" name="text" type="text" value="{{ .Text }}" disabled />{{ end }}
-    {{ if eq .State "TODO" }}
-        <button
-            hx-trigger="click"
-            hx-patch="/todo/{{.ID}}/edit"
-            hx-target="#todo-item-{{.ID}}"
-            hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/edit.svg" alt="Edit todo item icon">
-        </button>
-        <button
-                hx-trigger="click"
-                hx-patch="/todo/{{.ID}}/done"
-                hx-target="#todo-item-{{.ID}}"
-                hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/done.svg" alt="Done todo item icon">
-        </button>
-        <button
-                hx-trigger="click"
-                hx-delete="/todo/{{.ID}}"
-                hx-target="#todo-item-{{.ID}}"
-                hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/delete.svg" alt="Delete todo item icon">
-        </button>
-    {{ end }}
-    {{ if eq .State "EDIT" }}
-        <button
-            hx-trigger="click"
-            hx-patch="/todo/{{ .ID }}/edit/save"
-            hx-target="#todo-item-{{.ID}}"
-            hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/save.svg" alt="Save todo item icon">
-        </button>
-        <button
-            hx-trigger="click"
-            hx-patch="/todo/{{.ID}}/edit/cancel"
-            hx-target="#todo-item-{{.ID}}"
-            hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25"  src="/static/icons/cancel.svg" alt="Cancel todo item icon">
-        </button>
-    {{ end }}
-    {{ if eq .State "DONE" }}
-        <button
-            hx-trigger="click"
-            hx-patch="/todo/{{.ID}}/undo"
-            hx-target="#todo-item-{{.ID}}"
-            hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/undo.svg" alt="Undo todo item icon">
-        </button>
-        <button
-                hx-trigger="click"
-                hx-delete="/todo/{{.ID}}"
-                hx-target="#todo-item-{{.ID}}"
-                hx-swap="outerHTML"
-        >
-            <img class="todo-item-icon" width="25" src="/static/icons/delete.svg" alt="Delete todo item icon">
-        </button>
-    {{ end }}
-</li>
+{{ if eq .State "TODO" }}
+    {{ template "todo-todo-item.gohtml" . }}
+{{ else if eq .State "EDIT" }}
+    {{ template "todo-edit-item.gohtml" . }}
+{{ else if eq .State "DONE" }}
+    {{ template "todo-done-item.gohtml" . }}
+{{ end }}

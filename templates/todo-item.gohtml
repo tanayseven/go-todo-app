@@ -1,7 +1,0 @@
-{{ if eq .State "TODO" }}
-    {{ template "todo-todo-item.gohtml" . }}
-{{ else if eq .State "EDIT" }}
-    {{ template "todo-edit-item.gohtml" . }}
-{{ else if eq .State "DONE" }}
-    {{ template "todo-done-item.gohtml" . }}
-{{ end }}

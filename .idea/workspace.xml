@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55b812d-2633-4094-8fd8-9f4eb8610038" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/todo-done-item.gohtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/todo-edit-item.gohtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/todo-todo-item.gohtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo-base.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/base.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo-done-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/done-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo-edit-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/edit-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo-todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +61,11 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/todo" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Run" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="go-todo-app" />

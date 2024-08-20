@@ -113,7 +113,7 @@ func main() {
 	eng.AddConfig(&cfg).
 		AddGenerators(tables.Generators)
 	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob("templates/*.gohtml")),
+		templates: template.Must(template.ParseGlob("templates/**/*.gohtml")),
 	}
 	username := "john.doe"
 	e.Renderer = renderer
@@ -132,7 +132,7 @@ func main() {
 		db.Find(&listItems)
 		return c.Render(
 			http.StatusOK,
-			"todo-base.gohtml",
+			"base.gohtml",
 			TodoBaseViewModel{
 				Name:      username,
 				ListItems: ToListItemViewModel(listItems),
@@ -145,7 +145,7 @@ func main() {
 			State: TODO,
 		}
 		db.Create(&result)
-		return c.Render(http.StatusOK, "todo-item.gohtml", result.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", result.ToListItemViewModel())
 	})
 
 	e.DELETE("/todo/:id", func(c echo.Context) error {
@@ -159,7 +159,7 @@ func main() {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", EDIT)
-		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
 	e.PATCH("/todo/:id/edit/save", func(c echo.Context) error {
@@ -167,28 +167,28 @@ func main() {
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("Text", c.FormValue("text"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
 	e.PATCH("/todo/:id/edit/cancel", func(c echo.Context) error {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
 	e.PATCH("/todo/:id/done", func(c echo.Context) error {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", DONE)
-		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
 	e.PATCH("/todo/:id/undo", func(c echo.Context) error {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "todo-item.gohtml", listItem.ToListItemViewModel())
+		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 	e.Logger.Fatal(e.Start(":8000"))
 }

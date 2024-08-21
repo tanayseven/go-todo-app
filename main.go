@@ -26,65 +26,18 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-const (
-	TODO = 0
-	EDIT = 1
-	DONE = 2
-)
-
-type ListItemTable struct {
-	gorm.Model
-	ID    int
-	Text  string
-	State int
-}
-
-func (ListItemTable) TableName() string {
-	return "list_item"
-}
-
-type ListItemViewModel struct {
-	ID    int
-	Text  string
-	State string
-}
-
-func (l ListItemTable) ToListItemViewModel() ListItemViewModel {
-	stringState := ""
-	switch l.State {
-	case TODO:
-		stringState = "TODO"
-		break
-	case EDIT:
-		stringState = "EDIT"
-		break
-	case DONE:
-		stringState = "DONE"
-	}
-	return ListItemViewModel{
-		ID:    l.ID,
-		Text:  l.Text,
-		State: stringState,
-	}
-}
-
-func ToListItemViewModel(listItems []ListItemTable) []ListItemViewModel {
-	var listItemsViewModel []ListItemViewModel
-	for _, listItem := range listItems {
-		listItemsViewModel = append(listItemsViewModel, listItem.ToListItemViewModel())
-	}
-	return listItemsViewModel
-}
-
-type TodoBaseViewModel struct {
-	Name      string              `json:"message"`
-	ListItems []ListItemViewModel `json:"products"`
-}
-
-type TodoItemViewModel struct {
-	ID    int
-	Text  string
-	State string
+func registerRoot(e *echo.Echo, db *gorm.DB, username string) *echo.Route {
+	return e.GET("/", func(c echo.Context) error {
+		var listItems []ListItemTable
+		db.Find(&listItems)
+		return c.Render(
+			http.StatusOK,
+			"base.gohtml",
+			TodoBaseViewModel{
+				Name:      username,
+				ListItems: ToListItemViewModel(listItems),
+			})
+	})
 }
 
 func main() {
@@ -127,68 +80,8 @@ func main() {
 		return
 	}
 
-	e.GET("/", func(c echo.Context) error {
-		var listItems []ListItemTable
-		db.Find(&listItems)
-		return c.Render(
-			http.StatusOK,
-			"base.gohtml",
-			TodoBaseViewModel{
-				Name:      username,
-				ListItems: ToListItemViewModel(listItems),
-			})
-	})
+	registerRoot(e, db, username)
+	registerTodos(e, db)
 
-	e.POST("/todo/add", func(c echo.Context) error {
-		result := &ListItemTable{
-			Text:  c.FormValue("text"),
-			State: TODO,
-		}
-		db.Create(&result)
-		return c.Render(http.StatusOK, "item.gohtml", result.ToListItemViewModel())
-	})
-
-	e.DELETE("/todo/:id", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Delete(&listItem)
-		return c.NoContent(http.StatusOK)
-	})
-
-	e.PATCH("/todo/:id/edit", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("State", EDIT)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
-	})
-
-	e.PATCH("/todo/:id/edit/save", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("Text", c.FormValue("text"))
-		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
-	})
-
-	e.PATCH("/todo/:id/edit/cancel", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
-	})
-
-	e.PATCH("/todo/:id/done", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("State", DONE)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
-	})
-
-	e.PATCH("/todo/:id/undo", func(c echo.Context) error {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
-	})
 	e.Logger.Fatal(e.Start(":8000"))
 }

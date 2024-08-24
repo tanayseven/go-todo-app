@@ -1,6 +1,7 @@
 package main
 
 import (
+	rice "github.com/GeertJohan/go.rice"
 	_ "github.com/GoAdminGroup/go-admin/adapter/echo" // Import the adapter, it must be imported. If it is not imported, you need to define it yourself.
 	"github.com/GoAdminGroup/go-admin/engine"
 	"github.com/GoAdminGroup/go-admin/modules/config"
@@ -8,21 +9,20 @@ import (
 	"github.com/GoAdminGroup/go-admin/modules/language"
 	"github.com/GoAdminGroup/go-admin/tests/tables"
 	_ "github.com/GoAdminGroup/themes/adminlte" // Import the theme
+	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"html/template"
 	"io"
 	"net/http"
-
-	"github.com/labstack/echo/v4"
 )
 
-type TemplateRenderer struct {
+type Template struct {
 	templates *template.Template
 }
 
-func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
@@ -63,15 +63,28 @@ func main() {
 
 	e := echo.New()
 	eng := engine.Default()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 	eng.AddConfig(&cfg).
 		AddGenerators(tables.Generators)
-	renderer := &TemplateRenderer{
-		templates: template.Must(template.ParseGlob("templates/**/*.gohtml")),
+	// Create a new rice.Box for the templates
+	templateBox, err := rice.FindBox("templates")
+	if err != nil {
+		e.Logger.Fatal(err)
+	}
+
+	// Load all the templates from rice-box.go
+	t := &Template{
+		templates: template.Must(template.New("main").Parse(templateBox.MustString("base.gohtml"))),
+	}
+	staticBox, err := rice.FindBox("static")
+	if err != nil {
+		e.Logger.Fatal(err)
 	}
 	username := "john.doe"
-	e.Renderer = renderer
+	e.Renderer = t
 	e.Debug = true
-	e.Static("/static", "static")
+	e.Static("/static", staticBox.Name())
 	e.Use(middleware.Logger())
 	_ = eng.Use(e)
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/labstack/echo/v4"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
 )
@@ -67,56 +67,64 @@ type TodoItemViewModel struct {
 	State string
 }
 
-func registerTodos(e *echo.Echo, db *gorm.DB) {
-	e.POST("/todo/add", func(c echo.Context) error {
+func registerTodos(e *gin.Engine, db *gorm.DB) {
+	e.POST("/todo/add", func(c *gin.Context) {
+		err := c.Request.ParseForm()
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // TODO change this to an error html
+		}
 		result := &ListItemTable{
-			Text:  c.FormValue("text"),
+			Text:  c.PostForm("text"),
 			State: TODO,
 		}
 		db.Create(&result)
-		return c.Render(http.StatusOK, "item.gohtml", result.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", result.ToListItemViewModel())
 	})
 
-	e.DELETE("/todo/:id", func(c echo.Context) error {
+	e.DELETE("/todo/:id", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Delete(&listItem)
-		return c.NoContent(http.StatusOK)
+		c.Data(http.StatusOK, gin.MIMEHTML, nil)
 	})
 
-	e.PATCH("/todo/:id/edit", func(c echo.Context) error {
+	e.PATCH("/todo/:id/edit", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", EDIT)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
-	e.PATCH("/todo/:id/edit/save", func(c echo.Context) error {
+	e.PATCH("/todo/:id/edit/save", func(c *gin.Context) {
+		err := c.Request.ParseForm()
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // TODO change this to an error html
+		}
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
-		db.Model(&listItem).Update("Text", c.FormValue("text"))
+		db.Model(&listItem).Update("Text", c.PostForm("text"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
-	e.PATCH("/todo/:id/edit/cancel", func(c echo.Context) error {
+	e.PATCH("/todo/:id/edit/cancel", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
-	e.PATCH("/todo/:id/done", func(c echo.Context) error {
+	e.PATCH("/todo/:id/done", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", DONE)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 
-	e.PATCH("/todo/:id/undo", func(c echo.Context) error {
+	e.PATCH("/todo/:id/undo", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))
 		db.Model(&listItem).Update("State", TODO)
-		return c.Render(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
+		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
 }

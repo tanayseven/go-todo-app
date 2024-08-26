@@ -1,10 +1,8 @@
 package main
 
 import (
-	rice "github.com/GeertJohan/go.rice"
 	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/sqlite"
 	_ "github.com/GoAdminGroup/themes/adminlte"
-	"github.com/foolin/gin-template/supports/gorice"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -30,10 +28,8 @@ func main() {
 	gingine := gin.Default()
 
 	username := "john.doe"
-	gingine.HTMLRender = gorice.New(rice.MustFindBox("templates"))
 	gingine.LoadHTMLGlob("templates/**/*.gohtml")
-	staticBox := rice.MustFindBox("static")
-	gingine.StaticFS("/static", staticBox.HTTPBox())
+	gingine.StaticFS("/static", http.Dir("static"))
 
 	_ = db.AutoMigrate(ListItemTable{})
 

@@ -1,6 +1,14 @@
-<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']">
-    <input id="todo-item-input-{{.ID}}" style="text-decoration: line-through" name="text" type="text" value="{{ .Text }}" disabled />
+<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']" class="flex flex-grow bg-zinc-300 px-5 border-2 border-black">
+    <input
+            class="todo-item-new-text w-full bg-zinc-300 text-center line-through"
+            id="todo-item-input-{{.ID}}"
+            name="text"
+            type="text"
+            value="{{ .Text }}"
+            disabled
+    />
     <button
+            class="px-1"
             hx-trigger="click"
             hx-patch="/todo/{{.ID}}/undo"
             hx-target="#todo-item-{{.ID}}"

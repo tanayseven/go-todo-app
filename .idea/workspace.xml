@@ -5,11 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55b812d-2633-4094-8fd8-9f4eb8610038" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/icons/add.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo.go" beforeDir="false" afterPath="$PROJECT_DIR$/todo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/cancel.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/cancel.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/delete.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/delete.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/done.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/done.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/edit.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/edit.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/plus.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/save.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/save.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/icons/undo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/undo.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/base.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/base.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/done-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/done-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/edit-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/edit-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +78,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates/todo" />
     </key>
   </component>

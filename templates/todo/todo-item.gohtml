@@ -1,10 +1,19 @@
-<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']">
-    <input id="todo-item-input-{{.ID}}" name="text" type="text" value="{{ .Text }}" disabled />
+<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']" class="flex flex-grow bg-zinc-300 px-5 border-2 border-black">
+    <input
+            class="w-full bg-zinc-300 text-center"
+            id="todo-item-input-{{.ID}}"
+            name="text"
+            type="text"
+            value="{{ .Text }}"
+            disabled
+    />
     <button
+            class="px-1"
             hx-trigger="click"
             hx-patch="/todo/{{.ID}}/edit"
             hx-target="#todo-item-{{.ID}}"
             hx-swap="outerHTML"
+            hx-on:htmx:afterSwap="document.getElementById('todo-item-input-{{.ID}}').focus()"
     >
         <img class="todo-item-icon" width="25" src="/static/icons/edit.svg" alt="Edit todo item icon">
     </button>

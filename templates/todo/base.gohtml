@@ -2,27 +2,31 @@
 <html lang="en">
 <head>
     <title>Todo List</title>
+    <link rel="stylesheet" href="/static/main.css">
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="container">
-            <h1>Welcome {{.Name}}</h1>
-            <h2>Tasks</h2>
-            <form
-                hx-trigger="click from:button[id='add-new']"
-                hx-post="/todo/add"
-                hx-target="#todo-list"
-                hx-swap="beforeend"
-                hx-on:htmx:after-request="this.reset()"
-            >
-            <label>
-                <input type="text" name="text" class="todo-item-new-text">
-            </label>
-            <button id="add-new" class="todo-item-button">
-                <img class="todo-item-icon" width="25" src="/static/icons/plus.svg" alt="Add new todo item icon">
-            </button>
-            </form>
-            <ul id="todo-list">
+    <div class="page-wrapper flex justify-center items-center mt-5">
+        <div class="container w-4/5 bg-slate-100 border-4 p-8">
+            <h1 class="text-2xl">Welcome, {{.Name}}</h1>
+            <h2 class="text-3xl py-4">Tasks</h2>
+            <div class="w-full flex py-5">
+                <form
+                    class="flex flex-row w-full"
+                    hx-trigger="click from:button[id='add-new']"
+                    hx-post="/todo/add"
+                    hx-target="#todo-list"
+                    hx-swap="beforeend"
+                    hx-on:htmx:after-request="this.reset()"
+                >
+                    <label class="flex flex-grow border-2 border-black">
+                        <input type="text" name="text" class="todo-item-new-text w-full">
+                    </label>
+                    <button id="add-new" class="todo-item-button flex justify-end px-1">
+                        <img class="todo-item-icon " width="25" src="/static/icons/add.svg" alt="Add new todo item icon">
+                    </button>
+                </form>
+            </div>
+            <ul id="todo-list" class="flex flex-col w-full space-y-3">
                 {{range .ListItems}}
                     {{template "item.gohtml" .}}
                 {{end}}

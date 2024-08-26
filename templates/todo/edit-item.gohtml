@@ -1,6 +1,13 @@
-<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']">
-    <input id="todo-item-input-{{.ID}}" name="text" type="text" value="{{ .Text }}" />
+<li id="todo-item-{{.ID}}" hx-include="input[id='todo-item-input-{{.ID}}']" class="flex flex-grow bg-zinc-300 px-5 border-2 border-black">
+    <input
+            class="w-full bg-white text-center"
+            id="todo-item-input-{{.ID}}"
+            name="text"
+            type="text"
+            value="{{ .Text }}"
+    />
     <button
+            class="px-1"
             hx-trigger="click"
             hx-patch="/todo/{{ .ID }}/edit/save"
             hx-target="#todo-item-{{.ID}}"

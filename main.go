@@ -21,10 +21,21 @@ func registerRoot(e *gin.Engine, db *gorm.DB, username string) {
 }
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("main.db"), &gorm.Config{})
+	db := setupDatabase("main.db")
+	gingine := setupServer(db)
+
+	_ = gingine.Run(":9033")
+}
+
+func setupDatabase(databasePath string) *gorm.DB {
+	db, err := gorm.Open(sqlite.Open(databasePath), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
+	return db
+}
+
+func setupServer(db *gorm.DB) *gin.Engine {
 	gingine := gin.Default()
 
 	username := "john.doe"
@@ -35,6 +46,5 @@ func main() {
 
 	registerRoot(gingine, db, username)
 	registerTodos(gingine, db)
-
-	_ = gingine.Run(":9033")
+	return gingine
 }

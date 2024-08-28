@@ -9,10 +9,11 @@ Setup
 
 1. Install Tailwind cli from here: https://tailwindcss.com/blog/standalone-cli
 2. Install all the dependencies `go mod tidy`
-3. Copy the initial database `cp main.init.db main.db`
-4. Run the project `go run .`
-5. Open the browser and go to `http://localhost:8080`
-6. Generate a build for production `go build .`
+3. go install github.com/air-verse/air@latest
+4. Run this command while editing styles `./tailwindcss -i main.css -o ./static/main.css --watch`
+5. Run the project `air --build.cmd "go build -o bin/api ." --build.bin "./bin/api"`
+6. Open the browser and go to `http://localhost:9033`
+7. Generate a build for production `go build .`
 
 
 TODO

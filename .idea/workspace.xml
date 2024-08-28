@@ -5,25 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55b812d-2633-4094-8fd8-9f4eb8610038" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/icons/add.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/main.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/cancel.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/cancel.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/delete.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/delete.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/done.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/done.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/edit.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/edit.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/plus.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/save.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/save.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/icons/undo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/static/icons/undo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/todo/base.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/base.gohtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/todo/done-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/done-item.gohtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/todo/edit-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/edit-item.gohtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.init.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,30 +38,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Build.Run.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/tanayprabhudesai/personal/go-todo-app&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.Run.executor": "Run",
+    "Go Test.TestAddItem in go-todo-app.executor": "Run",
+    "Go Test.TestListIsInitiallyEmpty in go-todo-app.executor": "Run",
+    "Go Test.TestPingRoute in go-todo-app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/Users/tanayprabhudesai/personal/go-todo-app",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="GoMoveDeclarationDialog.RECENT_KEY">
       <recent name="$PROJECT_DIR$" />
@@ -82,7 +74,7 @@
       <recent name="$PROJECT_DIR$/templates/todo" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Test.TestAddItem in go-todo-app">
     <configuration name="Run" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="go-todo-app" />
       <working_directory value="$PROJECT_DIR$" />
@@ -92,6 +84,46 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestAddItem in go-todo-app" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go-todo-app" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-todo-app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestAddItem\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestListIsInitiallyEmpty in go-todo-app" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go-todo-app" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-todo-app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestListIsInitiallyEmpty\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestPingRoute in go-todo-app" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go-todo-app" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-todo-app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestPingRoute\E$" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.TestAddItem in go-todo-app" />
+        <item itemvalue="Go Test.TestListIsInitiallyEmpty in go-todo-app" />
+        <item itemvalue="Go Test.TestPingRoute in go-todo-app" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -107,5 +139,19 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/todo.go</url>
+          <line>71</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="DlvErrorBreakpoint" />
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

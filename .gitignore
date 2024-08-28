@@ -1,4 +1,6 @@
 main.db
+test.db
 go-todo-app
 rice-box.go
 tailwindcss
+bin/

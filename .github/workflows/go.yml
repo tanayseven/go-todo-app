@@ -43,7 +43,7 @@ jobs:
 
     - name: Deploy the container
       run: |
-        go build .
+        go build -o go-todo-app .
         ls -l
         heroku stack:set container --app ${{ secrets.HEROKU_APP_NAME }}
         heroku container:push web --app ${{ secrets.HEROKU_APP_NAME }}

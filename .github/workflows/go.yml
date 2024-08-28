@@ -44,7 +44,6 @@ jobs:
     - name: Deploy the container
       run: |
         go build -o ${{ vars.HEROKU_APP_NAME }} .
-        ls -l
         heroku stack:set container --app ${{ vars.HEROKU_APP_NAME }}
         heroku container:push web --app ${{ vars.HEROKU_APP_NAME }}
         heroku container:release web --app ${{ vars.HEROKU_APP_NAME }}

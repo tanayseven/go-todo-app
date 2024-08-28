@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/sqlite"
 	_ "github.com/GoAdminGroup/themes/adminlte"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"net/http"
+	"os"
 )
 
 func registerRoot(e *gin.Engine, db *gorm.DB, username string) {
@@ -23,8 +25,12 @@ func registerRoot(e *gin.Engine, db *gorm.DB, username string) {
 func main() {
 	db := setupDatabase("main.db")
 	gingine := setupServer(db)
+	portNumber := os.Getenv("PORT")
+	if portNumber == "" {
+		portNumber = "9033"
+	}
 
-	_ = gingine.Run(":9033")
+	_ = gingine.Run(fmt.Sprintf(":%s", portNumber))
 }
 
 func setupDatabase(databasePath string) *gorm.DB {

@@ -32,6 +32,7 @@ jobs:
 
     - name: Docker build and push image
       run: |
+        go build .
         docker build -t ${{ secrets.AWS_ECR_DOCKER_IMAGE_TAG }}:latest .
         aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_DOCKER_REGISTRY }}
         docker push ${{ secrets.AWS_ECR_DOCKER_IMAGE_TAG }}:latest

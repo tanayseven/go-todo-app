@@ -30,7 +30,7 @@ TODO
 - [X] Write the frontend for the TODO List
 - [X] Add HTMX for better UX
 - [X] Write simple unit tests
-- [ ] Create CI
+- [X] Create CI
 - [ ] Add CDK to deploy to docker
 - [ ] Add CD
 - [ ] Add JSON API

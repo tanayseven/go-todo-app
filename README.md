@@ -29,5 +29,11 @@ TODO
 - [X] Implement Mark Undone
 - [X] Write the frontend for the TODO List
 - [X] Add HTMX for better UX
-- [ ] Write simple tests
+- [X] Write simple unit tests
+- [ ] Create CI
+- [ ] Add CDK to deploy to docker
+- [ ] Add CD
+- [ ] Add JSON API
+- [ ] Add Atlas DB Migration support
+- [ ] Add End-to-End tests
 - [ ] Setup user auth

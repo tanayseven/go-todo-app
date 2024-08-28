@@ -15,6 +15,12 @@ Setup
 6. Open the browser and go to `http://localhost:9033`
 7. Generate a build for production `go build .`
 
+Deployment
+----------
+
+1. Install Heroku CLI `curl https://cli-assets.heroku.com/install.sh | sh`
+2. 
+
 
 TODO
 ----

@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55b812d-2633-4094-8fd8-9f4eb8610038" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo.go" beforeDir="false" afterPath="$PROJECT_DIR$/todo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/main_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/done-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/done-item.gohtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/todo/todo-item.gohtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +37,9 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "DefaultGoTemplateProperty": "Go File",
-    "Go Build.Run.executor": "Debug",
+    "Go Build.Run.executor": "Run",
     "Go Test.TestAddItem in go-todo-app.executor": "Run",
+    "Go Test.TestDeleteItem in go-todo-app.executor": "Debug",
     "Go Test.TestListIsInitiallyEmpty in go-todo-app.executor": "Run",
     "Go Test.TestPingRoute in go-todo-app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -91,6 +93,17 @@
       <pattern value="^\QTestAddItem\E$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestDeleteItem in go-todo-app" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="go-todo-app" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="go-todo-app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestDeleteItem\E$" />
+      <method v="2" />
+    </configuration>
     <configuration name="TestListIsInitiallyEmpty in go-todo-app" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="go-todo-app" />
       <working_directory value="$PROJECT_DIR$" />
@@ -115,6 +128,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestDeleteItem in go-todo-app" />
         <item itemvalue="Go Test.TestAddItem in go-todo-app" />
         <item itemvalue="Go Test.TestListIsInitiallyEmpty in go-todo-app" />
         <item itemvalue="Go Test.TestPingRoute in go-todo-app" />
@@ -138,6 +152,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/main_test.go</url>
+          <line>104</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="DlvErrorBreakpoint" />
       </default-breakpoints>

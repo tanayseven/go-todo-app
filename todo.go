@@ -92,6 +92,10 @@ func registerTodos(e *gin.Engine, db *gorm.DB) {
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // TODO change this to an error html
 		}
+		if c.PostForm("text") == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "text is empty"})
+			return
+		}
 		result := &ListItemTable{
 			Text:  c.PostForm("text"),
 			State: TODO,

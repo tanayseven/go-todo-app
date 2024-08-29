@@ -174,13 +174,6 @@ func registerTodoApi(e *gin.Engine, db *gorm.DB) {
 		c.JSON(http.StatusOK, listItem.ToListItemViewModel())
 	})
 
-	e.DELETE("/api/todo/:id", func(c *gin.Context) {
-		var listItem ListItemTable
-		db.First(&listItem, c.Param("id"))
-		db.Delete(&listItem)
-		c.JSON(http.StatusOK, gin.H{"message": "item deleted"})
-	})
-
 	e.PATCH("/api/todo/:id", func(c *gin.Context) {
 		var listItem ListItemTable
 		db.First(&listItem, c.Param("id"))

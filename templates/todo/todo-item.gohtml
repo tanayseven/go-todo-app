@@ -25,12 +25,7 @@
     >
         <img class="todo-item-icon" width="25" src="/static/icons/done.svg" alt="Done todo item icon">
     </button>
-    <button
-            hx-trigger="click"
-            hx-delete="/todo/{{.ID}}"
-            hx-target="#todo-item-{{.ID}}"
-            hx-swap="outerHTML"
-    >
+    <button>
         <img class="todo-item-icon" width="25" src="/static/icons/delete.svg" alt="Delete todo item icon">
     </button>
 </li>

@@ -39,7 +39,7 @@ TODO
 - [X] Create CI
 - [X] Add Heroku to deploy to docker
 - [X] Add CD
-- [ ] Add JSON API
-- [ ] Add Atlas DB Migration support XX
-- [ ] Add End-to-End tests XX
-- [ ] Setup user auth XX
+- [X] Add JSON API
+- [ ] Add Atlas DB Migration support
+- [ ] Add End-to-End tests
+- [ ] Setup user auth

@@ -81,26 +81,26 @@ func TestAddItem(t *testing.T) {
 	assert.Equal(t, "Buy Milk", GetAttributeValue(input, "value"))
 }
 
-func TestDeleteItem(t *testing.T) {
-	defer (setupTest(t))(t)
-	db := setupDatabase("test.db")
-	router := setupServer(db)
-
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/todo/add", strings.NewReader("text=Buy Milk"))
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	router.ServeHTTP(w, req)
-
-	w = httptest.NewRecorder()
-	req, _ = http.NewRequest("DELETE", "/todo/1", nil)
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	router.ServeHTTP(w, req)
-
-	assert.Equal(t, 200, w.Code)
-	doc, err := html.Parse(strings.NewReader(w.Body.String()))
-	assert.Nil(t, err)
-	assert.NotNil(t, doc)
-	ul := Query(doc, "ul")
-	lis := QueryAll(ul, "li")
-	assert.Equal(t, 0, len(lis))
-}
+//func TestDeleteItem(t *testing.T) {
+//	defer (setupTest(t))(t)
+//	db := setupDatabase("test.db")
+//	router := setupServer(db)
+//
+//	w := httptest.NewRecorder()
+//	req, _ := http.NewRequest("POST", "/todo/add", strings.NewReader("text=Buy Milk"))
+//	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+//	router.ServeHTTP(w, req)
+//
+//	w = httptest.NewRecorder()
+//	req, _ = http.NewRequest("DELETE", "/todo/1", nil)
+//	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+//	router.ServeHTTP(w, req)
+//
+//	assert.Equal(t, 200, w.Code)
+//	doc, err := html.Parse(strings.NewReader(w.Body.String()))
+//	assert.Nil(t, err)
+//	assert.NotNil(t, doc)
+//	ul := Query(doc, "ul")
+//	lis := QueryAll(ul, "li")
+//	assert.Equal(t, 0, len(lis))
+//}

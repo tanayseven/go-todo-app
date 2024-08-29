@@ -48,6 +48,25 @@ func (l ListItemTable) ToListItemViewModel() ListItemViewModel {
 	}
 }
 
+func (l ListItemTable) ToListItemJsonModel() ListItemJsonModel {
+	stringState := ""
+	switch l.State {
+	case TODO:
+		stringState = "TODO"
+		break
+	case EDIT:
+		stringState = "EDIT"
+		break
+	case DONE:
+		stringState = "DONE"
+	}
+	return ListItemJsonModel{
+		ID:    int(l.ID),
+		Text:  l.Text,
+		State: stringState,
+	}
+}
+
 func ToListItemViewModel(listItems []ListItemTable) []ListItemViewModel {
 	var listItemsViewModel []ListItemViewModel
 	for _, listItem := range listItems {
@@ -127,4 +146,64 @@ func registerTodos(e *gin.Engine, db *gorm.DB) {
 		db.Model(&listItem).Update("State", TODO)
 		c.HTML(http.StatusOK, "item.gohtml", listItem.ToListItemViewModel())
 	})
+}
+
+func registerTodoApi(e *gin.Engine, db *gorm.DB) {
+	// @BasePath /api
+
+	//TO-DO godoc
+	// @Summary Get to-do items
+	// @Description Get all to-do items
+	// @Router /todo [get]
+	// @Produce json
+	// @Success 200 {object} []ListItemViewModel
+	e.GET("/api/todo", func(c *gin.Context) {
+		var listItems []ListItemTable
+		db.Find(&listItems)
+		c.JSON(http.StatusOK, ToListItemJSONModel(listItems))
+	})
+
+	e.POST("/api/todo", func(c *gin.Context) {
+		var listItem ListItemTable
+		err := c.BindJSON(&listItem)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		db.Create(&listItem)
+		c.JSON(http.StatusOK, listItem.ToListItemViewModel())
+	})
+
+	e.DELETE("/api/todo/:id", func(c *gin.Context) {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		db.Delete(&listItem)
+		c.JSON(http.StatusOK, gin.H{"message": "item deleted"})
+	})
+
+	e.PATCH("/api/todo/:id", func(c *gin.Context) {
+		var listItem ListItemTable
+		db.First(&listItem, c.Param("id"))
+		err := c.BindJSON(&listItem)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		db.Save(&listItem)
+		c.JSON(http.StatusOK, listItem.ToListItemViewModel())
+	})
+}
+
+type ListItemJsonModel struct {
+	ID    int    `json:"id"`
+	Text  string `json:"text"`
+	State string `json:"state"`
+}
+
+func ToListItemJSONModel(items []ListItemTable) []ListItemJsonModel {
+	var listItems []ListItemJsonModel
+	for _, item := range items {
+		listItems = append(listItems, item.ToListItemJsonModel())
+	}
+	return listItems
 }

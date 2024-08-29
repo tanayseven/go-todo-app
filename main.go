@@ -5,6 +5,9 @@ import (
 	_ "github.com/GoAdminGroup/go-admin/modules/db/drivers/sqlite"
 	_ "github.com/GoAdminGroup/themes/adminlte"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	"go-todo-app/docs"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"net/http"
@@ -43,6 +46,7 @@ func setupDatabase(databasePath string) *gorm.DB {
 
 func setupServer(db *gorm.DB) *gin.Engine {
 	gingine := gin.Default()
+	docs.SwaggerInfo.BasePath = "/api/"
 
 	username := "john.doe"
 	gingine.LoadHTMLGlob("templates/**/*.gohtml")
@@ -52,5 +56,17 @@ func setupServer(db *gorm.DB) *gin.Engine {
 
 	registerRoot(gingine, db, username)
 	registerTodos(gingine, db)
+	registerTodoApi(gingine, db)
+
+	// TODO get swagger working
+	gingine.GET(
+		"/swagger/*any",
+		ginSwagger.WrapHandler(
+			swaggerfiles.Handler,
+			//ginSwagger.URL("http://localhost:9033/swagger/doc.json"),
+			//ginSwagger.DefaultModelsExpandDepth(-1),
+		),
+	)
+
 	return gingine
 }

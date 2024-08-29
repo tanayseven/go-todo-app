@@ -19,7 +19,7 @@ Deployment
 ----------
 
 1. Install Heroku CLI `curl https://cli-assets.heroku.com/install.sh | sh`
-2. 
+2. Check the logs `heroku logs --tail`
 
 
 TODO
@@ -37,9 +37,9 @@ TODO
 - [X] Add HTMX for better UX
 - [X] Write simple unit tests
 - [X] Create CI
-- [ ] Add CDK to deploy to docker
-- [ ] Add CD
+- [X] Add Heroku to deploy to docker
+- [X] Add CD
 - [ ] Add JSON API
-- [ ] Add Atlas DB Migration support
-- [ ] Add End-to-End tests
-- [ ] Setup user auth
+- [ ] Add Atlas DB Migration support XX
+- [ ] Add End-to-End tests XX
+- [ ] Setup user auth XX
